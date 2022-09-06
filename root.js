@@ -16,39 +16,44 @@ async function rootthings(ns, server) {
     await ns.backdoor(server); // Forgot what this does lol
 
 };
-/** @param {NS} ns // placing these are annoying */
-async function main(ns) {
-    if (server == "") {
-        let server = [
+/**
+ * @param {NS} ns // placing these are annoying 
+ * @param {String} server // The server to hack
+*/
+export async function main(ns, server) {
+    ns.tprint(`Type of server is ${typeof server} and value is ${server}`);
+    ns.tprint("The check will be" + (server == ""))
+    if (server === undefined) {
+        var server = [
             "n00dles", // Hacking Level: 1
             "foodnstuff", // Hacking Level: 1
             "sigma-cosmetics", // Hacking Level: 5
             "joesguns", // Hacking Level: 10
             "hong-fang-tea", // Hacking Level: 30
-            "harakri-sushi", // Hacking Level: 40
+            "harakiri-sushi", // Hacking Level: 40
             "iron-gym" // Hacking Level: 100
         ]; // All top level servers (Edit this if you don't have enough hacking skill)
 
-        while (true) {
-            for (let i = 0; i < server.length; i++) {
-                await ns.run('./attack.w.js' + server[i]); // Run the attack script for each server
+        while (true) { // infinite loop
+
+            await ns.sleep(50);
+            ns.tprint(server)
+            for (var i = 0; i < server.length; i++) {
+                if (ns.hasRootAccess(server) == false) { // checks if you have root access
+                    await rootthings(ns, server); // if false, get root access
+                }
+
+                await ns.run("attack.w.js", 1, server[i]); // Run the attack script for each server\
             }
         }
     }
     else {
         if (ns.hasRootAccess === false) {
             await rootthings() // if we don't have root access, get it
-            ns.run('./attack.w.js', server); // run the attack script after getting root access
+            await ns.run("attack.w.js", 1); // run the attack script after getting root access
         }
         else {
-            ns.run('./attack.w.js ' + server) // if we do have root access, start getting money :)
+            await ns.run("attack.w.js", 1); // if we do have root access, start getting money :)
         };
-}};
-
-/*TODO:\
-- [X] Check if user has root access
-- [X] If above requirements met, hack server
-- [X] (OPTIONAL) Backdoor, grow, weaken, and hack on a timed delay
-- [X] Create a list of servers to run the attack on if server is not specified
-- [ ] Test script
-*/
+    }
+};
