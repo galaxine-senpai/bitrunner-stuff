@@ -1,4 +1,10 @@
 /**
+ * @file	root.js
+ * @author	Ayden <github.com/galaxine-senpai>
+ * 
+ * @breif	Gets root access on a server and gets money.
+ */
+/**
  * @param {NS} ns // Define NS for bitburner
  * @param {String} server // The server to hack
  */
